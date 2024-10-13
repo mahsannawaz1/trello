@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">trello-clone</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile_list">ProfileListActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+</resources>
