@@ -13,6 +13,21 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Labels"
+            android:exported="true"
+            android:label="@string/title_activity_labels"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".EditBoard"
+            android:exported="true"
+            android:label="@string/title_activity_edit_board"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".BoardMenu"
+            android:exported="true"
+            android:label="@string/title_activity_board_menu"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
