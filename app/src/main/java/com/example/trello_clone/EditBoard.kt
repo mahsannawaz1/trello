@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class EditBoard : AppCompatActivity() {
@@ -24,6 +25,19 @@ class EditBoard : AppCompatActivity() {
                 else -> false
             }
         }
+        var goToLabels = findViewById<LinearLayout>(R.id.lableGrid)
+
+        goToLabels.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    val intent = Intent(this, Labels::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 }
 
