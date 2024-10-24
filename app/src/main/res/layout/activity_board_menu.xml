@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BoardMenu">
+
+    <!-- Header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/default_board"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/menu_icon"
+            android:layout_width="30dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_boards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            android:text="Project Managem..."
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/menu_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/search"
+            app:layout_constraintEnd_toEndOf="@id/notification_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/notification_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/bell"
+            app:layout_constraintEnd_toEndOf="@id/option_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/option_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="228dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/options_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- HorizontalScrollView taking up remaining space -->
+    <HorizontalScrollView
+        android:id="@+id/default_cards"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/default_board"
+        android:fillViewport="true"
+        android:padding="16dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.0">
+
+    <LinearLayout
+        android:id="@+id/board_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Card 1 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="200dp"
+                android:id="@+id/card1_body"
+
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/card1_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Project Resources"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card1_option"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/options_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/card1_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card1_image"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/board_card1_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card1_text" />
+
+                <LinearLayout
+                    android:id="@+id/card1_detail1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1_image">
+
+                    <TextView
+                        android:id="@+id/card1_detail1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Trello Tip: Card Labels What do they mean? (Click for more info)"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/list_icon1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/list_icon"
+                        app:layout_constraintTop_toTopOf="@id/card1_detail1_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card1_detail2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1_detail1">
+
+                    <TextView
+                        android:id="@+id/card1_detail2_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Project 'Teamwork Dream Work'"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/card1_detail2_text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Launch Timeline"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/list_icon2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/list_icon"
+                            app:layout_constraintTop_toTopOf="@id/card1_detail2_text2" />
+
+                        <ImageView
+                            android:id="@+id/list_icon3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/todo_icon"
+                            app:layout_constraintRight_toLeftOf="@id/list_icon2" />
+
+                        <TextView
+                            android:id="@+id/card1_detail2_text3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginTop="7dp"
+                            android:text="0/6"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card1_detail3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1_detail2">
+
+                    <TextView
+                        android:id="@+id/card1_detail3_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Stake Holders"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card1_detail4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1_detail3">
+
+                    <TextView
+                        android:id="@+id/card1_detail4_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Weekly Updates"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card1_detail5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card1_detail4">
+
+                    <TextView
+                        android:id="@+id/card1_detail5_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+  Add Card"
+                        android:textColor="@color/primary" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card 2 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/card2_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Project Resources 2"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card2_option"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/options_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/card2_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card2_image"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/board_card1_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card2_text" />
+
+                <LinearLayout
+                    android:id="@+id/card2_detail1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card2_image">
+
+                    <TextView
+                        android:id="@+id/card2_detail1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Trello Tip: Card Labels What do they mean? (Click for more info)"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/list_icon4"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/list_icon"
+                        app:layout_constraintTop_toTopOf="@id/card2_detail1_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card2_detail2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card2_detail1">
+
+                    <TextView
+                        android:id="@+id/card2_detail2_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Project 'Teamwork Dream Work 2'"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/card2_detail2_text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Launch Timeline 2"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/list_icon5"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/list_icon"
+                            app:layout_constraintTop_toTopOf="@id/card2_detail2_text2" />
+
+                        <ImageView
+                            android:id="@+id/list_icon6"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/todo_icon"
+                            app:layout_constraintRight_toLeftOf="@id/list_icon5" />
+
+                        <TextView
+                            android:id="@+id/card2_detail2_text3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginTop="7dp"
+                            android:text="0/6"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card2_detail3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card2_detail2">
+
+                    <TextView
+                        android:id="@+id/card2_detail3_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Stake Holders 2"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card2_detail4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card2_detail3">
+
+                    <TextView
+                        android:id="@+id/card2_detail4_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Weekly Updates 2"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card2_detail5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card2_detail4">
+
+                    <TextView
+                        android:id="@+id/card2_detail5_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+  Add Card"
+                        android:textColor="@color/primary" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card 3 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/card3_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Project Resources 3"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card3_option"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/options_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/card3_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card3_image"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/board_card1_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card3_text" />
+
+                <LinearLayout
+                    android:id="@+id/card3_detail1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card3_image">
+
+                    <TextView
+                        android:id="@+id/card3_detail1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Trello Tip: Card Labels What do they mean? (Click for more info)"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/list_icon7"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/list_icon"
+                        app:layout_constraintTop_toTopOf="@id/card3_detail1_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card3_detail2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card3_detail1">
+
+                    <TextView
+                        android:id="@+id/card3_detail2_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Project 'Teamwork Dream Work 3'"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/card3_detail2_text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Launch Timeline 3"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/list_icon8"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/list_icon"
+                            app:layout_constraintTop_toTopOf="@id/card3_detail2_text2" />
+
+                        <ImageView
+                            android:id="@+id/list_icon9"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/todo_icon"
+                            app:layout_constraintRight_toLeftOf="@id/list_icon8" />
+
+                        <TextView
+                            android:id="@+id/card3_detail2_text3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginTop="7dp"
+                            android:text="0/6"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card3_detail3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card3_detail2">
+
+                    <TextView
+                        android:id="@+id/card3_detail3_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Stake Holders 3"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card3_detail4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card3_detail3">
+
+                    <TextView
+                        android:id="@+id/card3_detail4_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Weekly Updates 3"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card3_detail5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card3_detail4">
+
+                    <TextView
+                        android:id="@+id/card3_detail5_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+  Add Card"
+                        android:textColor="@color/primary" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card 4 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:contentPadding="8dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/card4_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Project Resources 4"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card4_option"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/options_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/card4_text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/card4_image"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/board_card1_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card4_text" />
+
+                <LinearLayout
+                    android:id="@+id/card4_detail1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card4_image">
+
+                    <TextView
+                        android:id="@+id/card4_detail1_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Trello Tip: Card Labels What do they mean? (Click for more info)"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/list_icon10"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/list_icon"
+                        app:layout_constraintTop_toTopOf="@id/card4_detail1_text" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card4_detail2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card4_detail1">
+
+                    <TextView
+                        android:id="@+id/card4_detail2_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Project 'Teamwork Dream Work 4'"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/card4_detail2_text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Launch Timeline 4"
+                        android:textColor="@color/white" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/list_icon11"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/list_icon"
+                            app:layout_constraintTop_toTopOf="@id/card4_detail2_text2" />
+
+                        <ImageView
+                            android:id="@+id/list_icon12"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/todo_icon"
+                            app:layout_constraintRight_toLeftOf="@id/list_icon11" />
+
+                        <TextView
+                            android:id="@+id/card4_detail2_text3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginTop="7dp"
+                            android:text="0/6"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card4_detail3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card4_detail2">
+
+                    <TextView
+                        android:id="@+id/card4_detail3_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Stake Holders 4"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card4_detail4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/dark_gray"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card4_detail3">
+
+                    <TextView
+                        android:id="@+id/card4_detail4_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Weekly Updates 4"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/card4_detail5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/card4_detail4">
+
+                    <TextView
+                        android:id="@+id/card4_detail5_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="+  Add Card"
+                        android:textColor="@color/primary" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

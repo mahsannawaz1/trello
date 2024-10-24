@@ -5,4 +5,7 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_profile_list">ProfileListActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_board_menu">BoardMenu</string>
+    <string name="title_activity_edit_board">EditBoard</string>
+    <string name="title_activity_labels">Labels</string>
 </resources>
