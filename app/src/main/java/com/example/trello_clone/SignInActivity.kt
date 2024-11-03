@@ -23,6 +23,18 @@ class SignInActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        var goToHome = findViewById<TextView>(R.id.btn_signin)
+        goToHome.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
 

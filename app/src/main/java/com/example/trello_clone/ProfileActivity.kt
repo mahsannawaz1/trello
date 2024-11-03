@@ -5,6 +5,7 @@ import android.media.Image
 import android.os.Bundle
 import android.view.MotionEvent
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -19,6 +20,30 @@ class ProfileActivity : AppCompatActivity() {
                 when (motionEvent.action) {
                     MotionEvent.ACTION_DOWN -> {
                         val intent = Intent(this, SignInActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            var goToBoards = findViewById<LinearLayout>(R.id.boards_section)
+            goToBoards.setOnTouchListener { view, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            var goToCards = findViewById<LinearLayout>(R.id.cards_section)
+            goToCards.setOnTouchListener { view, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        val intent = Intent(this, BoardMenu::class.java)
                         startActivity(intent)
                         true
                     }

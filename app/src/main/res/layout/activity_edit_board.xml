@@ -642,8 +642,7 @@
             android:padding="8dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
-            android:gravity="center_vertical"
->
+            android:gravity="center_vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
@@ -653,24 +652,38 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/profile" />
 
-            <EditText
-                android:id="@+id/footer_edit_text"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Type your message..."
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:background="@drawable/edittext_shape"
-                android:padding="8dp"
-                android:textSize="14sp" />
+                android:background="@drawable/border"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="10dp"
+                >
 
-            <ImageView
-                android:id="@+id/send_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/send"
-                android:layout_marginStart="8dp" />
+                <EditText
+                    android:id="@+id/footer_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Add comment"
+
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:background="@color/dark_gray"
+                    android:paddingVertical="5dp"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/send_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/send"
+                    android:layout_marginStart="8dp" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/link_image"
@@ -679,6 +692,7 @@
                 android:src="@drawable/link"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
+
     </LinearLayout>
 
 

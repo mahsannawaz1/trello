@@ -92,6 +92,10 @@ class EditBoard : AppCompatActivity() {
         openModalButton1.setOnClickListener {
             modalView1.visibility = View.VISIBLE
         }
+        val openModalButton2 = findViewById<ImageView>(R.id.link_image)
+        openModalButton2.setOnClickListener {
+            modalView1.visibility = View.VISIBLE
+        }
 
         // Hiding the modal when clicking outside the main modal area (this will close the modal)
         modalView1.setOnClickListener {
