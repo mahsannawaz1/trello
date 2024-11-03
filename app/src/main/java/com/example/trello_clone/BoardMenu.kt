@@ -69,8 +69,8 @@ class BoardMenu : AppCompatActivity() {
             }
         }
 
-        // Inflate the modal layout and add it to the main content view
-        val rootView = findViewById<ViewGroup>(android.R.id.content) // Ensure this is a ViewGroup
+        // Inflating the modal layout and add it to the main content view
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
         modalView = LayoutInflater.from(this).inflate(R.layout.activity_add_card, rootView, false)
 
         // Initially, hide the modal
