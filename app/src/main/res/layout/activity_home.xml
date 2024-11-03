@@ -32,21 +32,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="12dp"
-            android:text="Ehsen Nawaz's..."
+            android:text="Boards"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/menu_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/search_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="40dp"
-            android:src="@drawable/search"
-            app:layout_constraintRight_toRightOf="@id/notification_icon"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/notification_icon"
