@@ -211,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    android:background="@color/secondary"
+                    android:background="@drawable/border_radius"
                     android:padding="8dp">
 
                     <ImageView
@@ -236,7 +236,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    android:background="@color/secondary"
+                    android:background="@drawable/border_radius"
                     android:padding="8dp">
 
                     <ImageView
@@ -261,13 +261,13 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_margin="8dp"
-                    android:background="@color/secondary"
+                    android:background="@drawable/border_radius"
                     android:padding="8dp">
 
                     <ImageView
                         android:id="@+id/icon_action_3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:src="@drawable/user" />
 
                     <TextView
@@ -562,6 +562,74 @@
 
             </LinearLayout>
         </LinearLayout>
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activity"
+            android:textColor="@android:color/white"
+            android:paddingHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/not1"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+
+                android:src="@drawable/profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <LinearLayout
+                android:id="@+id/alltext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@id/profile_image1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/profile_image1"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/text_view_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ehsen Nawaz"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5 minutes ago"
+                    android:textColor="@color/dark_gray" />
+                <TextView
+                    android:id="@+id/comment_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border"
+                    android:padding="8dp"
+                    android:layout_marginVertical="4dp"
+                    android:text="Absolutely! Let’s create a customized routine that fits your goals, fitness level, and schedule. Here are a few questions to get started:"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

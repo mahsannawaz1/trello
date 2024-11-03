@@ -13,6 +13,11 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".NotificationActivity"
+            android:exported="true"
+            android:label="@string/title_activity_notification"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
             android:name=".Labels"
             android:exported="true"
             android:label="@string/title_activity_labels"
