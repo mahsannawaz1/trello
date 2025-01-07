@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <!-- Header Text -->
+        <TextView
+            android:id="@+id/cardName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Project Resources"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_options" />
+
+        <!-- Options Icon -->
+        <ImageView
+            android:id="@+id/iv_options"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/options_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Card Image -->
+
+        <!-- Card Detail Section -->
+
+        <ImageView
+            android:id="@+id/iv_card_image"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_board"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardName" />
+
+        <TextView
+            android:id="@+id/tv_card_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Trello Tip: Card Labels What do they mean? (Click for more info)"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:paddingTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/iv_card_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Icon and Progress -->
+        <LinearLayout
+            android:id="@+id/progress_section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_card_detail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_list_icon"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/list_icon" />
+
+            <TextView
+                android:id="@+id/tv_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/6"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="4dp"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Stakeholders -->
+        <TextView
+            android:id="@+id/tv_stakeholders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Stake Holders"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:paddingTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/progress_section"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Weekly Updates -->
+        <TextView
+            android:id="@+id/tv_weekly_updates"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Weekly Updates"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:paddingTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_stakeholders"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- RecyclerView for all cards -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_weekly_updates" />
+
+        <TextView
+            android:id="@+id/tv_add_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Add Card"
+            android:textColor="@color/primary"
+            app:layout_constraintTop_toBottomOf="@id/rv_cards"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

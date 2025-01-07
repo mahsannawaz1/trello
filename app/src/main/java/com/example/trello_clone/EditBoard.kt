@@ -4,17 +4,27 @@ package com.example.trello_clone
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import de.hdodenhof.circleimageview.CircleImageView
+import android.text.format.DateUtils
 
 class EditBoard : AppCompatActivity() {
 
@@ -22,9 +32,22 @@ class EditBoard : AppCompatActivity() {
     private lateinit var modalView: View
     private lateinit var modalView1: View
 
+    private var userName: String? = null // To store the logged-in user's name
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_board)
+
+        // Get the logged-in user's name
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        // Get the Board ID passed from the intent
+        val boardId = intent.getStringExtra("BOARD_ID")
+        println("BOARD_ID: $boardId")
+        if (boardId != null) {
+            fetchChecklistItems(boardId)
+            fetchBoardDetails(boardId)
+        }
 
         var closeBtn = findViewById<ImageView>(R.id.close_icon)
 
@@ -113,14 +136,244 @@ class EditBoard : AppCompatActivity() {
             addItemEditText.requestFocus()
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(addItemEditText, InputMethodManager.SHOW_IMPLICIT)
+
         }
 
+
+        addItemEditText.setOnEditorActionListener { v, actionId, event ->
+            if (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                val checklistItem = addItemEditText.text.toString().trim()
+                if (checklistItem.isNotEmpty()) {
+                    addItemEditText.text.clear() // Clear the input field
+                    boardId?.let { id -> addChecklistItemToDatabase(id, checklistItem) } // Pass boardId
+                } else {
+                    Toast.makeText(this, "Please enter a checklist item", Toast.LENGTH_SHORT).show()
+                }
+                true
+            } else {
+                false
+            }
+        }
+
+        val sendButton: ImageView = findViewById(R.id.send_button)
+        val commentInput: EditText = findViewById(R.id.footer_edit_text)
+
+        sendButton.setOnClickListener {
+            val commentText = commentInput.text.toString().trim()
+            if (commentText.isNotEmpty()) {
+                // Clear input field
+                commentInput.text.clear()
+
+                // Push comment to Firebase
+                boardId?.let { id ->
+                    addCommentToDatabase(id, commentText)
+                }
+
+                // Add the comment to the UI
+                addCommentToUI("John Doe", System.currentTimeMillis(), commentText)
+            } else {
+                Toast.makeText(this, "Please enter a comment", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        val boardId = intent.getStringExtra("BOARD_ID")
+        if (boardId != null) {
+            fetchComments(boardId) // Fetch comments whenever the activity is resumed
+        }
+    }
+
     private fun scrollToView(view: View) {
         val location = IntArray(2)
         view.getLocationOnScreen(location)
         val y = location[1]
         scrollView.smoothScrollTo(0, y)
+    }
+
+    private fun addChecklistItemToUI(checklistItem: String) {
+        val checklistLayout: LinearLayout = findViewById(R.id.checklists_layout)
+
+        // Create a new horizontal LinearLayout for the item
+        val itemLayout = LinearLayout(this)
+        itemLayout.orientation = LinearLayout.HORIZONTAL
+        itemLayout.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        itemLayout.gravity = android.view.Gravity.CENTER_VERTICAL
+
+        // Add a CheckBox
+        val checkBox = CheckBox(this)
+        checkBox.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        checkBox.setPadding(
+            (8 * resources.displayMetrics.density).toInt(), // Left padding for the label text
+            0, // Top padding
+            0, // Right padding
+            0  // Bottom padding
+        )
+        checkBox.text = checklistItem
+        checkBox.setTextColor(resources.getColor(R.color.white))
+        checkBox.isChecked = false
+
+        // Add the CheckBox to the layout
+        itemLayout.addView(checkBox)
+
+        // Add the new item layout to the checklist layout
+        checklistLayout.addView(itemLayout)
+    }
+
+
+    private fun addChecklistItemToDatabase(boardId: String, checklistItem: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        // Generate a unique key for the checklist item
+        val checklistItemId = database.child("boards").child(boardId).child("checklists").push().key
+
+        if (checklistItemId != null) {
+            val checklistData = mapOf(
+                "id" to checklistItemId,
+                "name" to checklistItem
+            )
+
+            database.child("boards").child(boardId).child("checklists").child(checklistItemId)
+                .setValue(checklistData)
+                .addOnSuccessListener {
+                    // Successfully added to the database
+                    Toast.makeText(this, "Checklist item added", Toast.LENGTH_SHORT).show()
+                    addChecklistItemToUI(checklistItem)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to add checklist item", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun addCommentToUI(userName: String, timeInMillis: Long, commentText: String) {
+        val commentsContainer: LinearLayout = findViewById(R.id.commentsContainer)
+
+        // Inflate the comment layout
+        val inflater = LayoutInflater.from(this)
+        val commentView = inflater.inflate(R.layout.comment_layout, commentsContainer, false)
+
+        // Set user data
+        val userNameView: TextView = commentView.findViewById(R.id.text_view_1)
+        val timeView: TextView = commentView.findViewById(R.id.time_text)
+        val commentContent: TextView = commentView.findViewById(R.id.comment_txt)
+
+        userNameView.text = userName
+        timeView.text = DateUtils.getRelativeTimeSpanString(
+            timeInMillis,
+            System.currentTimeMillis(),
+            DateUtils.MINUTE_IN_MILLIS
+        )
+        commentContent.text = commentText
+
+        // Add the comment view to the container
+        commentsContainer.addView(commentView)
+    }
+
+
+
+    private fun addCommentToDatabase(boardId: String, commentText: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        // Generate a unique key for the comment
+        val commentId = database.child("boards").child(boardId).child("comments").push().key
+
+        if (commentId != null) {
+            val commentData = mapOf(
+                "id" to commentId,
+                "user" to "John Doe",
+                "time" to System.currentTimeMillis().toString(),
+                "text" to commentText
+            )
+
+            database.child("boards").child(boardId).child("comments").child(commentId)
+                .setValue(commentData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Comment added successfully", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to add comment", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun fetchComments(boardId: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        database.child("boards").child(boardId).child("comments")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (commentSnapshot in snapshot.children) {
+                            val userName = commentSnapshot.child("user").getValue(String::class.java) ?: "Unknown"
+                            val time = commentSnapshot.child("time").getValue(String::class.java)?.toLongOrNull() ?: System.currentTimeMillis()
+                            val text = commentSnapshot.child("text").getValue(String::class.java) ?: "No text"
+
+                            addCommentToUI(userName, time, text)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@EditBoard, "Error fetching comments: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+    }
+
+    private fun fetchBoardDetails(boardId: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        database.child("boards").child(boardId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val boardName = snapshot.child("name").getValue(String::class.java)
+                    if (!boardName.isNullOrEmpty()) {
+                        val titleEditText: EditText = findViewById(R.id.title)
+                        titleEditText.setText(boardName) // Update the EditText with the board name
+                    } else {
+                        Toast.makeText(this@EditBoard, "Board name not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@EditBoard, "Error fetching board details: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+
+    private fun fetchChecklistItems(boardId: String) {
+        val database = FirebaseDatabase.getInstance().reference
+
+        database.child("boards").child(boardId).child("checklists")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (itemSnapshot in snapshot.children) {
+                            val checklistItem = itemSnapshot.child("name").getValue(String::class.java)
+                            if (checklistItem != null) {
+                                addChecklistItemToUI(checklistItem)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@EditBoard, "Error fetching checklist: ${error.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 }
 

@@ -1,157 +1,205 @@
 package com.example.trello_clone
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var database: DatabaseReference
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var boardsList: MutableList<Board>
+    private lateinit var boardAdapter: BoardAdapter
     private lateinit var modalView: View
-
     private lateinit var modalView1: View
+    private lateinit var modalView2: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Set up logout navigation button
+        // Initialize Firebase Database
+        database = FirebaseDatabase.getInstance().reference.child("boards")
+
+        // Set up RecyclerView
+        recyclerView = findViewById(R.id.workspace_section)
+        recyclerView.layoutManager = GridLayoutManager(this, 3) // 3 items per row
+        boardsList = mutableListOf()
+        boardAdapter = BoardAdapter(boardsList)
+        recyclerView.adapter = boardAdapter
+
+        // Fetch boards from Firebase
+        fetchBoards()
+
+        // Set up logout button
         val logoutBtn = findViewById<ImageView>(R.id.menu_icon)
         logoutBtn.setOnTouchListener { _, motionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                val intent = Intent(this, ProfileActivity::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, ProfileActivity::class.java))
                 true
             } else {
                 false
             }
         }
 
-        // Set up workspace navigation button
-        val btn1 = findViewById<ImageView>(R.id.workspace_1)
-        btn1.setOnTouchListener { _, motionEvent ->
+        val moveToBoards = findViewById<ConstraintLayout>(R.id.add_Card)
+        moveToBoards.setOnTouchListener { _, motionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                val intent = Intent(this, BoardMenu::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, BoardMenu::class.java))
                 true
             } else {
                 false
             }
         }
 
-        // Set up add card navigation button
-        val btn2 = findViewById<ConstraintLayout>(R.id.add_Card)
-        btn2.setOnTouchListener { _, motionEvent ->
+        val notificationMove = findViewById<ImageView>(R.id.notification_icon)
+        notificationMove.setOnTouchListener { _, motionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                val intent = Intent(this, BoardMenu::class.java)
-                startActivity(intent)
+                startActivity(Intent(this, NotificationActivity::class.java))
                 true
             } else {
                 false
             }
         }
 
-        // Set up notification navigation button
-        val btn3 = findViewById<ImageView>(R.id.notification_icon)
-        btn3.setOnTouchListener { _, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                val intent = Intent(this, NotificationActivity::class.java)
-                startActivity(intent)
-                true
-            } else {
-                false
-            }
-        }
-
-        // Inflate the modal layout and add it to the main content view
-        val rootView = findViewById<ViewGroup>(android.R.id.content) // Ensure this is a ViewGroup
+        // Inflate and set up modal for adding a card
+        val rootView = findViewById<ViewGroup>(android.R.id.content)
         modalView = LayoutInflater.from(this).inflate(R.layout.activity_add_card, rootView, false)
-
-        // Initially, hide the modal
         modalView.visibility = View.GONE
         rootView.addView(modalView)
 
-        // Set up the Open Modal button click listener
-        val openModalButton = findViewById<Button>(R.id.btn_add_Card)
-        openModalButton.setOnClickListener {
+        val addCardButton = findViewById<Button>(R.id.btn_add_Card)
+        addCardButton.setOnClickListener {
             modalView.visibility = View.VISIBLE
         }
 
-        // Set up the Close button inside the modal
-        val topCloseButton: ImageView = modalView.findViewById(R.id.topCloseButton)
-        topCloseButton.setOnClickListener {
+        val closeCardModalButton = modalView.findViewById<ImageView>(R.id.topCloseButton)
+        closeCardModalButton.setOnClickListener {
             modalView.visibility = View.GONE
         }
 
-        // Hide the modal when clicking outside the main modal area (this will close the modal)
-        modalView.setOnClickListener {
-            modalView.visibility = View.GONE
-        }
-
-
-
-        // Inflate the modal layout and add it to the main content view
-        val rootView1 = findViewById<ViewGroup>(android.R.id.content) // Ensure this is a ViewGroup
+        // Inflate and set up modal for editing a location
         modalView1 = LayoutInflater.from(this).inflate(R.layout.activity_change_location, rootView, false)
-
-        // Initially, hide the modal
         modalView1.visibility = View.GONE
-        rootView1.addView(modalView1)
+        rootView.addView(modalView1)
 
-        // Set up the Open Modal button click listener
-        val openModalButton1 = findViewById<ImageView>(R.id.edit_icon)
-        openModalButton1.setOnClickListener {
+        val editIconButton = findViewById<ImageView>(R.id.edit_icon)
+        editIconButton.setOnClickListener {
             modalView1.visibility = View.VISIBLE
         }
 
-        // Set up the Close button inside the modal
-        val topCloseButton2: ImageView = modalView1.findViewById(R.id.topCloseButton)
-        topCloseButton2.setOnClickListener {
+        val closeLocationModalButton = modalView1.findViewById<ImageView>(R.id.topCloseButton)
+        closeLocationModalButton.setOnClickListener {
             modalView1.visibility = View.GONE
         }
 
-        // Hide the modal when clicking outside the main modal area (this will close the modal)
-        modalView1.setOnClickListener {
-            modalView1.visibility = View.GONE
-        }
-
-
+        // Set up dropdown menus in location modal
         val dropdownMenu = modalView1.findViewById<Spinner>(R.id.boardMenu)
-
-        // Access the string array from resources
-        val board_options = resources.getStringArray(R.array.board_dropdown_options)
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        val adapter = ArrayAdapter(this, R.layout.dropdown_item, board_options)
-
-        // Set the adapter to the spinner
-        dropdownMenu.adapter = adapter
-        // Set a default selection (optional)
-        dropdownMenu.setSelection(0) // 0 for "Option 1"
-
-
+        val boardOptions = resources.getStringArray(R.array.board_dropdown_options)
+        val dropdownAdapter = ArrayAdapter(this, R.layout.dropdown_item, boardOptions)
+        dropdownMenu.adapter = dropdownAdapter
 
         val dropdownMenu1 = modalView1.findViewById<Spinner>(R.id.listMenu)
+        val listOptions = resources.getStringArray(R.array.list_dropdown_options)
+        val dropdownAdapter1 = ArrayAdapter(this, R.layout.dropdown_item, listOptions)
+        dropdownMenu1.adapter = dropdownAdapter1
 
-        // Access the string array from resources
-        val list_options = resources.getStringArray(R.array.list_dropdown_options)
+        // Inflate and set up modal for adding a board
+        modalView2 = LayoutInflater.from(this).inflate(R.layout.add_board, rootView, false)
+        modalView2.visibility = View.GONE
+        rootView.addView(modalView2)
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        val adapter1 = ArrayAdapter(this, R.layout.dropdown_item, list_options)
+        val addBoardButton = findViewById<ImageView>(R.id.add_board)
+        addBoardButton.setOnClickListener {
+            modalView2.visibility = View.VISIBLE
+        }
 
-        // Set the adapter to the spinner
-        dropdownMenu1.adapter = adapter1
-        // Set a default selection (optional)
-        dropdownMenu1.setSelection(0) // 0 for "Option 1"
+        val closeBoardModalButton = modalView2.findViewById<ImageView>(R.id.topCloseButton)
+        closeBoardModalButton.setOnClickListener {
+            modalView2.visibility = View.GONE
+        }
+
+        val sendBoardButton = modalView2.findViewById<ImageView>(R.id.sendButton)
+        val boardNameInput = modalView2.findViewById<EditText>(R.id.boardNameInput)
+        sendBoardButton.setOnClickListener {
+            val boardName = boardNameInput.text.toString().trim()
+            if (boardName.isNotEmpty()) {
+                saveBoardToDatabase(boardName)
+                modalView2.visibility = View.GONE
+            } else {
+                Toast.makeText(this, "Please enter a board name", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
+
+    private fun saveBoardToDatabase(boardName: String) {
+        val boardId = database.push().key
+        if (boardId != null) {
+            val boardData = mapOf(
+                "id" to boardId,
+                "name" to boardName,
+                "image" to "" // Placeholder for image
+            )
+            database.child(boardId).setValue(boardData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Board added successfully", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Failed to add board", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun fetchBoards() {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                boardsList.clear()
+                for (boardSnapshot in snapshot.children) {
+                    val boardId = boardSnapshot.child("id").value.toString()
+                    val boardName = boardSnapshot.child("name").value.toString()
+                    val boardImage = boardSnapshot.child("image").value?.toString()
+                    boardsList.add(Board(boardId, boardName, boardImage))
+                }
+                boardAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@HomeActivity, "Failed to load boards", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+}
+
+data class Board(val id: String, val name: String, val image: String?)
+
+class BoardAdapter(private val boards: List<Board>) : RecyclerView.Adapter<BoardAdapter.BoardViewHolder>() {
+    inner class BoardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val boardId: TextView = itemView.findViewById(R.id.project_id)
+        val boardName: TextView = itemView.findViewById(R.id.project_heading)
+        val boardImage: ImageView = itemView.findViewById(R.id.default_icon)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_board, parent, false)
+        return BoardViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: BoardViewHolder, position: Int) {
+        val board = boards[position]
+        holder.boardId.text = board.id // Bind the board ID
+        holder.boardImage.setImageResource(R.drawable.default_board) // Default image
+        holder.boardName.text = board.name
+        holder.boardImage.setImageResource(R.drawable.default_board) // Default image
+    }
+
+    override fun getItemCount(): Int = boards.size
 }
